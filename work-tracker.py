@@ -61,14 +61,14 @@ async def on_message(message):
     user_id = message.author.id
     content = message.content.lower()
 
-    if content.startswith('#startwork'):
+    if content.startswith('/startwork'):
         if user_id in active_sessions:
             await message.channel.send("You're already clocked in.")
         else:
             active_sessions[user_id] = datetime.now(IST)
             await message.channel.send(f"{message.author.display_name} started working at {active_sessions[user_id].strftime('%H:%M:%S')}")
 
-    elif content.startswith('#stopwork'):
+    elif content.startswith('/stopwork'):
         start_time = active_sessions.pop(user_id, None)
         if not start_time:
             await message.channel.send("You haven't started working yet.")
@@ -80,30 +80,30 @@ async def on_message(message):
             conn.commit()
             await message.channel.send(f"{message.author.display_name} stopped working. Total: {duration:.2f} hours")
 
-    elif content.startswith('#workhours'):
+    elif content.startswith('/workhours'):
         c.execute('SELECT SUM(duration) FROM work_sessions WHERE user_id = ?', (user_id,))
         total = c.fetchone()[0] or 0
         await message.channel.send(f"{message.author.display_name}, you’ve worked {total:.2f} hours total.")
 
-    elif content.startswith('#resetwork'):
+    elif content.startswith('/resetwork'):
         active_sessions.pop(user_id, None)
         await message.channel.send("Your current session has been reset.")
-    elif content.startswith('#todayhours'):
+    elif content.startswith('/todayhours'):
         target = message.mentions[0] if message.mentions else message.author
         total = get_hours(target.id, 'day')
         await message.channel.send(f"{target.display_name} has worked {total:.2f} hours today.")
 
-    elif content.startswith('#weekhours'):
+    elif content.startswith('/weekhours'):
         target = message.mentions[0] if message.mentions else message.author
         total = get_hours(target.id, 'week')
         await message.channel.send(f"{target.display_name} has worked {total:.2f} hours this week.")
 
-    elif content.startswith('#monthhours'):
+    elif content.startswith('/monthhours'):
         target = message.mentions[0] if message.mentions else message.author
         total = get_hours(target.id, 'month')
         await message.channel.send(f"{target.display_name} has worked {total:.2f} hours this month.")
 
-    elif content.startswith('#leaderboard'):
+    elif content.startswith('/leaderboard'):
         period = 'day'
         if 'week' in content:
             period = 'week'
