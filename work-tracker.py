@@ -1,8 +1,6 @@
 import discord
 import sqlite3
 from datetime import datetime, timedelta
-from discord.ext import commands
-from discord import app_commands
 
 import pytz
 
