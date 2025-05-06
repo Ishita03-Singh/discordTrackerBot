@@ -1,8 +1,10 @@
 import discord
+import os
 import sqlite3
 from datetime import datetime, timedelta
-
 import pytz
+
+TOKEN = os.getenv("DISCORD_TOKEN")
 
 # Define IST timezone
 IST = pytz.timezone('Asia/Kolkata')
@@ -118,4 +120,4 @@ async def on_message(message):
             await message.channel.send(f"📊 Leaderboard ({period}):\n" + "\n".join(leaderboard))
 
 # Replace with your real token from Discord Developer Portal
-client.run('MTM2ODY0OTc0NDExMjY4NTI4Nw.G99fmF.CvQBo29TjaUqYrn1binj8xcz6qdNmzPHOBt01U')
+client.run(TOKEN)
