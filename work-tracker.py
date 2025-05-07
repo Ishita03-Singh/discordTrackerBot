@@ -28,14 +28,13 @@ def keep_alive():
 intents = discord.Intents.default()
 intents.message_content = True  # Required to read messages
 
-client = discord.Client(intents=intents)
 bot = commands.Bot(command_prefix='/', intents=intents)
 
 # Define IST timezone
 IST = pytz.timezone('Asia/Kolkata')
 
 # SQLite DB setup
-conn = sqlite3.connect('text_work_hours.db')
+conn = sqlite3.connect('text_work_hours.db', check_same_thread=False)
 c = conn.cursor()
 c.execute('''
 CREATE TABLE IF NOT EXISTS work_sessions (
