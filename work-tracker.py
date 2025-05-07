@@ -170,5 +170,6 @@ async def on_ready():
 
 # Run the bot with your Discord token
 TOKEN = os.getenv("DISCORD_TOKEN")
+print(f"Discord Token: {TOKEN}")  # This will show you the value or None
 keep_alive()
 bot.run(TOKEN)
